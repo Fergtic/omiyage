@@ -5,7 +5,9 @@ import {Link}  from 'react-router-dom'
 import AddComment from './add-comment'
 
 export default function Comments({ content, docId, comments: allComments, dateCreated, commentInput }){
+    
     const [comments, setComments] = useState(allComments);
+    
     if (comments === undefined){
       console.log("it was undefined")
       return(
@@ -16,7 +18,7 @@ export default function Comments({ content, docId, comments: allComments, dateCr
         commentInput={commentInput}/>
       )
     }else{
-      console.log("it is defined")
+      
       return(
         <>
         <div className = 'pl-5  pt-2 pb-3'>
@@ -26,7 +28,7 @@ export default function Comments({ content, docId, comments: allComments, dateCr
                 </p>
             
             )}
-            {comments.slice(1, 2).map((item) => (
+            {comments.slice(0, 1).map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
             <Link to={`/p/${item.displayName}`}>
               <span className="mr-1 font-bold">{item.displayName}</span>

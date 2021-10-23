@@ -71,7 +71,7 @@ export default function CreatePost(){
                 imageSrc: `images/${user.displayName}/posts/${image.name}`,
                 photoId: photoId,
                 likes: [],
-                comments: [{}]
+                comments: []
                 
             }),
             history.push(ROUTES.DASHBOARD)
