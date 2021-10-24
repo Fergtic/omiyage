@@ -10,7 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage"
 export default function User({username, fullName}){
     const storage = getStorage();
     const [imageUrl, setUrl] = useState('')
-    getDownloadURL(ref(storage, `images/avatars/${username}`))
+    getDownloadURL(ref(storage, `images/${username}/profilePic`))
     .then((url) => {
         console.log("url: ", url)
         setUrl(url)

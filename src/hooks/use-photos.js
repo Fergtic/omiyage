@@ -25,6 +25,8 @@ export default function usePhotos(){
 
         getTimeLinePhotos();
     }, [userId])
+
+    
     return (
         {photos}
     )

@@ -4,9 +4,11 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import {Link} from 'react-router-dom'
 
 export default function Header ({ username }){
+
     const storage = getStorage();
     const [imageUrl, setUrl] = useState('')
-    getDownloadURL(ref(storage, `images/avatars/${username}`))
+    console.log("username", username)
+    getDownloadURL(ref(storage, `images/${username}/profilePic`))
     .then((url) => {
         console.log("url: ", url)
         setUrl(url)

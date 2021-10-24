@@ -1,13 +1,15 @@
 import {useState} from 'react'
 import {PropTypes} from 'prop-types'
 import {formatDistance } from 'date-fns'
-import {Link}  from 'react-router-dom'
+import {Link, useHistory}  from 'react-router-dom'
 import AddComment from './add-comment'
+import usePostListener from '../../hooks/use-post-listener'
+import * as ROUTES from '../../constants/routes'
 
-export default function Comments({ content, docId, comments: allComments, dateCreated, commentInput }){
+export default function Comments({ content, docId, comments: allComments, dateCreated, commentInput, photoId, showExtra }){
     
     const [comments, setComments] = useState(allComments);
-    
+    const history = useHistory();
     if (comments === undefined){
       console.log("it was undefined")
       return(
@@ -17,15 +19,27 @@ export default function Comments({ content, docId, comments: allComments, dateCr
         setComments = {setComments}
         commentInput={commentInput}/>
       )
-    }else{
+    }else if (showExtra === false){
       
       return(
         <>
         <div className = 'pl-5  pt-2 pb-3'>
+          
             {comments.length >= 1 && (
-                <p className='text-sm font-bold text-gray-base mb-1 cursor-pointer'>
-                    View all comments
-                </p>
+              <button
+              className='text-sm font-bold text-gray-base mb-1 cursor-pointer'
+              type='button'
+              >
+                <Link
+                  to={{
+                      pathname: `/m/${photoId}`
+                       // your data array of objects
+                      }}
+                >
+                  View all comments
+                  </Link>
+
+              </button>
             
             )}
             {comments.slice(0, 1).map((item) => (
@@ -48,6 +62,29 @@ export default function Comments({ content, docId, comments: allComments, dateCr
         </>
         
     )
+    }else{
+      return(
+        <>
+        <p className="text-gray-base uppercase text-xs mt-2 pl-5">
+          {formatDistance(dateCreated, new Date())} ago
+        </p>
+        <div className = 'pl-5  pt-2 pb-3'>
+            {comments.map((item) => (
+          <p key={`${item.comment}-${item.displayName}`} className="mb-1">
+            <Link to={`/p/${item.displayName}`}>
+              <span className="mr-1 font-bold">{item.displayName}</span>
+            </Link>
+            <span>{item.comment}</span>
+          </p>
+        ))}
+        </div>
+        <AddComment
+        docId ={docId}
+        comments = {comments}
+        setComments = {setComments}
+        commentInput={commentInput}/>
+        </>
+      )
     }
     
 }

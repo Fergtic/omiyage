@@ -5,9 +5,11 @@ import { FieldValue } from '../lib/firebase';
 
 
 export async function doesUsernameExist(username) {
+  console.log("username", username)
     const result = collection(FieldValue, 'users')
     const q = query(result, where('username', '==', username.toLowerCase() ))
     const results = await getDocs(q)
+    console.log(results.docs.length)
     return results.docs.length === 0;
   }
 
@@ -30,6 +32,20 @@ export async function getUserByUserId(userId){
 
 
     return user;
+
+  }
+
+  export async function getPostByPostId(postId){
+    const result = collection(FieldValue, 'photos')
+    const q = query(result, where('photoId', '==', postId))
+    const results = await getDocs(q)
+    const post = results.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id
+    }));
+
+    console.log("this is the post", post)
+    return post;
 
   }
 
@@ -104,4 +120,18 @@ export async function getPhotos(userId, following){
     
   );
   return photoWithUserDetails
+}
+
+export async function getUSerByUserId(userId){
+  const result = collection(FieldValue, 'userId')
+  const q = query(result, where('userId', 'in', userId))
+  const results = await getDocs(q)
+
+  const user = results.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id
+  }))
+
+  return user
+
 }

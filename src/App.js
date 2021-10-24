@@ -7,7 +7,7 @@ import useAuthListener from './hooks/use-auth-listener';
 import ProtectedRoute from './helpers/protected-route';
 import IsUserLoggedIn from './helpers/is-user-logged-in';
 import CreatePost from './pages/make-post';
-import MainPost from './pages/main-post';
+import MainPost from './components/post/main-post';
 const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/sign-up'));
 const NotFound = lazy(() => import('./pages/not-found'));
@@ -25,12 +25,14 @@ export default function App() {
             <IsUserLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.LOGIN}> 
             <Login/>
             </IsUserLoggedIn>
-            
             <IsUserLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.SIGN_UP}> 
             <SignUp/>
             </IsUserLoggedIn>
             <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
               <Dashboard/>
+            </ProtectedRoute>
+            <ProtectedRoute user={user} path={ROUTES.MAIN_POST} exact>
+              <MainPost/>
             </ProtectedRoute>
             <ProtectedRoute user={user} path={ROUTES.MAKE_POST} exact>
               <CreatePost/>

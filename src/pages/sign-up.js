@@ -59,7 +59,7 @@ export default function SignUp(){
                         idExists =  doesPhotoIdExist(photoId)
                         console.log("id inside the loop", idExists)
                     }
-                    const uploadTask = ref(storage, `images/avatars/${username}`)
+                    const uploadTask = ref(storage, `images/${username.toLowerCase()}/profilePic`)
                     uploadBytes(uploadTask, image)
                     
                     addDoc(collection(FieldValue, 'users'), {
@@ -67,10 +67,12 @@ export default function SignUp(){
                         username: username.toLowerCase(),
                         fullName,
                         emailAddress: emailAddress.toLowerCase(),
-                        following: [],
+                        following: [userCredentials.user.uid],
+                        followers: [userCredentials.user.uid],
                         profilePicture: `images/avatars/${username}`,
                         dateCreated: Date.now()
                     })
+                    console.log("should be pushing here")
                     history.push(ROUTES.DASHBOARD)
                 })
                 .catch((error) => {

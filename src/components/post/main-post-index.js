@@ -1,21 +1,42 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useParams, useHistory, } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { getPostByPostId } from '../../services/firebase';
 import Header from './header';
-import Image from './Image'
-import Content from "../post/content";
+import Image from './Image';
+import Content from './content';
 import Title from './Title';
-import Actions from './actions'
+import Actions from './actions';
 import Comments from './comments';
+import useAuthListener from '../../hooks/use-auth-listener';
+import { getUserByUserId } from '../../services/firebase';
 
-export default function Post( { content }){
-
-  
+export default function MainPostIndex ({content}){
     const commentInput = useRef(null);
+    const { user } = useAuthListener();
+    const [userLiked, setUserLiked] = useState(false)
+    const [displayName, setDisplayName]= useState('')
     const handleFocus = () => commentInput.current.focus();
-
+    useEffect(() => { 
+        async function getUserName(){
+            const username = await getUserByUserId(content.userId)
+            setDisplayName(username[0].username)
+        }
+        
+        getUserName()
+        console.log("userId", user.uid)
+        console.log("username in the index", displayName)
+        console.log("content", content)
+        if(content.likes.includes(user.uid)){
+            setUserLiked(true)
+        }else{
+            setUserLiked(false)
+        }
+        
+    }, [user, content])
+    console.log("userLiked", userLiked)
     return(
         <div className='rounded col-span-4 border bg-white border-rounded border-gray-primary mb-8'>
-            <Header username={content.username}/>
+            <Header username={displayName}/>
             <div className="container mx-auto max-w-screen-lg h-full">
                 <div className="flex justify-start h-full ">
                   <div className="text-gray-700 text-center flex items-center align-items cursor-pointer  w-3/12">
@@ -30,7 +51,7 @@ export default function Post( { content }){
                         <Actions 
                         docId = {content.docId}
                         totalLikes = {content.likes.length}
-                        likedPhoto = {content.userLikedPhoto}
+                        likedPhoto = {userLiked}
                         handleFocus = {handleFocus}/>
                         <div className=''>
                              <Content className = ''mesContent={content.mesContent}/>
@@ -47,27 +68,14 @@ export default function Post( { content }){
                         dateCreated = {content.dateCreated}
                         commentInput = {commentInput}
                         photoId = {content.photoId}
-                        showExtra = {false}/>
+                        showExtra = {true}/>
                 
- 
+    
                 
             </div>
               
         </div>
             
     )
-}
-
-
-Post.propTypes = {
-    content: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        imageSrc: PropTypes.string.isRequired,
-        content: PropTypes.string.isRequired,
-        docId: PropTypes.string.isRequired,
-        userLikedPhoto: PropTypes.string.isRequired,
-        likes: PropTypes.string.isRequired,
-        comments: PropTypes.string.isRequired,
-        dateCreated: PropTypes.string.isRequired,
-    })
+    
 }

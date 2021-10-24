@@ -26,7 +26,6 @@ export default function CreatePost(){
     
     const { user } = useAuthListener();
     console.log("user", {user})
-    //console.log("user content", {userContent})
     const { firebase, FieldValue} = useContext(FirebaseContext)
 
 
