@@ -24,7 +24,7 @@ export default function Suggestions({userId, following, loggedInUserDocId}){
     ) : profiles.length > 0 ? (
         <div className='round flex flex-col'>
             <div className='text-sm flex items-center algin-items justify-between mb-2'>
-                <p>Suggestions for you</p>
+                <p>Users</p>
             </div>
             <div className='mt-4 grid gap-5'>
                 {profiles.map((profile) =>(
