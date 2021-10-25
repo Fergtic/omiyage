@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 export default function(NotFound){
 
     useEffect(() => {
-        document.title = 'Anon - Page Not Found'
+        document.title = 'Omiyage - Page Not Found'
     })
 
     return(

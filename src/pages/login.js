@@ -32,7 +32,7 @@ export default function Login(){
     
 
     useEffect(() =>{
-        document.title = 'Login - Anon';
+        document.title = 'Login - Omiyage';
     }, []);
     return (
         <div className="container flex mx-auto max-w-screen-md justify-center items-center h-screen">

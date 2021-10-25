@@ -18,12 +18,16 @@ export default function CreatePost(){
     const [image, setImage] = useState(null)
     const isInvalid = title === '' || content === '' || image === null;
     const history = useHistory();
+    const [error, setError] = useState('');
     const storage = getStorage()
     const {
         user: {uid: userId= '' }
     } = useContext(UserContext)
     
-    
+    useEffect(()=> {
+        
+        document.title = "Create a post - Omiyage";
+    })
     const { user } = useAuthListener();
     console.log("user", {user})
     const { firebase, FieldValue} = useContext(FirebaseContext)
@@ -61,7 +65,23 @@ export default function CreatePost(){
         }
         const uploadTask = ref(storage, `images/${user.displayName}/posts/${image.name}`, metadata)
         uploadBytes(uploadTask, image)
-        return(
+        if(content.length > 215){
+            setError("Please enter no more than 215 characters for the message content (Including spaces)")
+            setContent('')
+            return(
+                null
+            )
+        }
+        else if(title.length > 53){
+            setError("Please enter no more than 53 characters for the title content (Including spaces)")
+            setTitle('')
+            return(
+                null
+            )
+
+        }
+        else{
+            return(
             addDoc(collection(FieldValue, 'photos'), {
                 dateCreated: Date.now(),
                 userId: userId,
@@ -74,7 +94,9 @@ export default function CreatePost(){
                 
             }),
             history.push(ROUTES.DASHBOARD)
+        
        )
+        }
 
        
 
@@ -84,7 +106,8 @@ export default function CreatePost(){
     return(
         <div className className='container flex mx-auto max-w-screen-md justify-center items-center h-screen'>
             <div className='flex flex-col'>
-                <div className='flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded'>
+                <div className='flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded '>
+                {error && <p className='mb-4 text-xs text-red-primary'> {error}</p>}
                     <form onSubmit={handlePost} method='POST'>
                         <input
                         aria-label='Enter your post title'
@@ -102,10 +125,11 @@ export default function CreatePost(){
                         onChange={({ target }) => setContent(target.value)}
                         value={content}
                         />
+                        <p className='text-sm text-gray-base'> Please enter your post's picture</p>
                         <input
                         aria-label='Enter your post photo'
                         type='file'
-                        className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-1 border border-gray-primary rounded mb-2"
+                        className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-6 border border-gray-primary rounded mb-2"
                         onChange={handleChange}
                         />
                         <button 

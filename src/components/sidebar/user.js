@@ -23,15 +23,15 @@ export default function User({username, fullName}){
             <Link to={`/p/${username}`} className='grid grid-cols-4 gap-4 mb-6 items-center'>
             <div className='flex items-center justify-between col-span-1'>
                 <img
-                className="w-16 flex mr-3"
+                className="w-16  h-16 flex mr-3 rounded-full"
                 src={imageUrl}
                 alt=''>
                 </img> 
     
             </div>
             <div className='cols-span-3'> 
-                <p className='font-bold text-sm'> {username}</p> 
-                <p className='text-sm'> {fullName}</p> 
+                <p className='font-bold text-sm'> {fullName}</p> 
+                <p className='text-sm'> {username}</p> 
             </div>
          </Link>   
         )

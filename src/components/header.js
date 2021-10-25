@@ -18,8 +18,8 @@ export default function Header(){
                 <div className="flex justify-between h-full">
                   <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
                     <h1 className="flex justify-center w-full">
-                        <Link to={ROUTES.DASHBOARD} aria-label="Anon logo">
-                            <img src="/images/Anon_logo.png" alt="Anon" className="mt-2 w-6/12" />
+                        <Link to={ROUTES.DASHBOARD} aria-label="Omiyage logo">
+                            <img src="/images/OMIYAGE-logo.png" alt="Omiyage" className="mt-2 w-6/12" />
                         </Link>
                     </h1>
                   </div>

@@ -12,7 +12,7 @@ export default function Dashboard(){
 
 
     useEffect(() => {
-        document.title = 'Anon'
+        document.title = 'Omiyage'
     }, [])
     if(user) {
         return(

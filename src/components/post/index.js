@@ -15,11 +15,11 @@ export default function Post( { content }){
 
     return(
         <div className='rounded col-span-4 border bg-white border-rounded border-gray-primary mb-8'>
-            <Header username={content.username}/>
+            <Header username={content.username} extra={false}/>
             <div className="container mx-auto max-w-screen-lg h-full">
                 <div className="flex justify-start h-full ">
                   <div className="text-gray-700 text-center flex items-center align-items cursor-pointer  w-3/12">
-                    <h1 className="flex justify-center w-full pt-2 ">
+                    <h1 className="flex justify-center w-full h-full pt-2 container pl-2 pr-1">
                     <Image src={content.imageSrc} title={content.title}/>
                     </h1>
                   </div>

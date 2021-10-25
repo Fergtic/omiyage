@@ -78,24 +78,15 @@ export default function SignUp(){
                 .catch((error) => {
                     if(error.code === 'auth/email-already-in-use'){
                         setError("Email already in use")
-                        setFullName('');
                         setEmailAddress('');
-                        setPassword('');
-                        setUsername('');
                     }
                     else if(error.code === 'auth/weak-password'){
                         setError("Weak Password, please use a minimum of 6")
-                        setFullName('');
-                        setEmailAddress('');
                         setPassword('');
-                        setUsername('');
                     }
                     else if (error.code === 'auth/invalid-email'){
                         setError("Please use a valid email address")
-                        setFullName('');
                         setEmailAddress('');
-                        setPassword('');
-                        setUsername('');
                     }
                     console.log(error.code)
 
@@ -119,7 +110,7 @@ export default function SignUp(){
     
 
     useEffect(() =>{
-        document.title = 'Sign Up - Anon';
+        document.title = 'Sign Up - Omiyage';
     }, []);
     return (
         <div className="container flex mx-auto max-w-screen-md justify-center items-center h-screen">
@@ -159,6 +150,7 @@ export default function SignUp(){
                         onChange={({ target }) => setPassword(target.value)}
                         value={password}
                     />
+                    <p className='text-sm text-gray-base'> Please enter your profile picture</p>
                     <input
                         aria-label='Enter your profile picture'
                         type='file'

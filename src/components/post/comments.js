@@ -23,7 +23,7 @@ export default function Comments({ content, docId, comments: allComments, dateCr
       
       return(
         <>
-        <div className = 'pl-5  pt-2 pb-3'>
+        <div className = 'pl-5 pb-3'>
           
             {comments.length >= 1 && (
               <button
@@ -65,9 +65,14 @@ export default function Comments({ content, docId, comments: allComments, dateCr
     }else{
       return(
         <>
-        <p className="text-gray-base uppercase text-xs mt-2 pl-5">
+        <p className="text-gray-base uppercase text-xs mt-2 pl-5 pb-2">
           {formatDistance(dateCreated, new Date())} ago
         </p>
+        <AddComment
+        docId ={docId}
+        comments = {comments}
+        setComments = {setComments}
+        commentInput={commentInput}/>
         <div className = 'pl-5  pt-2 pb-3'>
             {comments.map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
@@ -78,11 +83,7 @@ export default function Comments({ content, docId, comments: allComments, dateCr
           </p>
         ))}
         </div>
-        <AddComment
-        docId ={docId}
-        comments = {comments}
-        setComments = {setComments}
-        commentInput={commentInput}/>
+        
         </>
       )
     }
