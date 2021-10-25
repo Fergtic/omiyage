@@ -52,7 +52,7 @@ export async function getUserByUserId(userId){
 
 export async function getSuggestedProfiles(userId, following){
   const result = collection(FieldValue, 'users')
-  const q = query(result, limit(5));
+  const q = query(result, limit(15));
   const results = await getDocs(q)
   if (following.length > 0){
     return results.docs
