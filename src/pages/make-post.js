@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import { doesPhotoIdExist } from '../services/firebase';
 import usePhotos from '../hooks/use-photos'
 import * as ROUTES from '../constants/routes'
+import { doesFileNameExist } from '../services/firebase';
 import * as fs from 'fs'
 
 import useAuthListener from "../hooks/use-auth-listener";
@@ -19,6 +20,7 @@ export default function CreatePost(){
     const isInvalid = title === '' || content === '' || image === null;
     const history = useHistory();
     const [error, setError] = useState('');
+    const [fileName ,setFileName] = useState('')
     const storage = getStorage()
     const {
         user: {uid: userId= '' }
@@ -49,7 +51,7 @@ export default function CreatePost(){
         }
     }
 
-    const handlePost = async (event) => {
+    const handlePost = async (event, fileName) => {
         event.preventDefault()
         var photoId = createPhotoId()
         var idExists = await doesPhotoIdExist(photoId)
@@ -63,7 +65,7 @@ export default function CreatePost(){
         const metadata = {
             photoId: photoId
         }
-        const uploadTask = ref(storage, `images/${user.displayName}/posts/${image.name}`, metadata)
+        const uploadTask = ref(storage, `images/${user.displayName}/posts/${photoId}`, metadata)
         uploadBytes(uploadTask, image)
         if(content.length > 215){
             setError("Please enter no more than 215 characters for the message content (Including spaces)")
@@ -87,7 +89,7 @@ export default function CreatePost(){
                 userId: userId,
                 mesContent: content,
                 title: title,
-                imageSrc: `images/${user.displayName}/posts/${image.name}`,
+                imageSrc: `images/${user.displayName}/posts/${photoId}`,
                 photoId: photoId,
                 likes: [],
                 comments: []
