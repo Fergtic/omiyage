@@ -13,6 +13,13 @@ export async function doesUsernameExist(username) {
     return results.docs.length === 0;
   }
 
+export async function doesFileNameExist(filename){
+  const result = collection(FieldValue, 'photos')
+  const q = query(result, where('filename', '==', filename))
+  const results = await getDocs(q)
+  return results.docs.length === 0;
+}
+
   export async function doesPhotoIdExist(photoId) {
     const result = collection(FieldValue, 'photos')
     const q = query(result, where('photoId', '==', photoId ))
