@@ -15,7 +15,7 @@ export default function Timeline(){
                 photos.map((content) => <Post key={content.docId}  content={content}/>)
             ) : (
                 <p className="text-center text-2xl">
-                    Follow more people to see more posts(Refresh to see posts)
+                    Follow more people to see more posts (Refresh to see posts)
 
                 </p>
             )}
