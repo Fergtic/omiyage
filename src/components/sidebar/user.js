@@ -21,7 +21,7 @@ export default function User({username, fullName}){
     } else{
         return(
             <Link to={`/p/${username}`} className='grid grid-cols-4 gap-4 mb-6 items-center'>
-            <div className='flex items-center justify-between col-span-1'>
+            <div className='flex items-center justify-between'>
                 <img
                 className="w-16  h-16 flex mr-3 rounded-full"
                 src={imageUrl}
